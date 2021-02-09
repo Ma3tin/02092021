@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.HashSet;
 
 public class Main {
 
@@ -24,6 +25,7 @@ public class Main {
 
         String line = "";
         try {
+            HashSet<Integer> noNameIco = new HashSet<>();
             for (int i = 2015; i <= 2020; i++) {
                 String fileName = "VF_" + i + ".dat";
                 String fileNameDone = "VF_" + i + "-done.dat";
@@ -46,9 +48,15 @@ public class Main {
                     bw.write(row[2]);
                     bw.newLine();
                     line = br.readLine();
+                    boolean isIn = false;
+                    for (int k = 0; k < fileName.length(); k++) {
+                        isIn = isNotInArray(row[1], ico);
+                        if (isIn) noNameIco.add(Integer.parseInt(row[1]));
+                    }
                 }
                 bw.close();
             }
+            System.out.println(noNameIco);
 
 
         } catch (FileNotFoundException e) {
@@ -57,5 +65,13 @@ public class Main {
             e.printStackTrace();
         }
     }
+    public static boolean isNotInArray (String rowIco, String[] ico) {
+        for (int i = 0; i < ico.length; i++) {
+           if (ico[i].equals(rowIco)) return false;
+
+        }
+        return true;
+    }
+
 }
 
